@@ -129,8 +129,6 @@ class MLP(Model):
         return tf.nn.softmax(self.outputs)
 
 
-
-
 class GCN(Model):
     def __init__(self, placeholders, input_dim, **kwargs):
         super(GCN, self).__init__(**kwargs)
@@ -159,7 +157,6 @@ class GCN(Model):
                                         self.placeholders['labels_mask'])
 
     def _build(self):
-
         self.layers.append(GraphConvolution(input_dim=self.input_dim,
                                             output_dim=FLAGS.hidden1,
                                             placeholders=self.placeholders,
@@ -177,7 +174,6 @@ class GCN(Model):
 
     def predict(self):
         return tf.nn.softmax(self.outputs)
-
 
 
 class GCN_APPRO(Model):
@@ -228,10 +224,10 @@ class GCN_APPRO(Model):
         return tf.nn.softmax(self.outputs)
 
 
-class GCN_APPRO_Mix(Model): #mixture of dense and gcn
+class GCN_APPRO_Mix(Model):  # mixture of dense and gcn
     def __init__(self, placeholders, input_dim, **kwargs):
         super(GCN_APPRO_Mix, self).__init__(**kwargs)
-        self.inputs = placeholders['AXfeatures']# A*X for the bottom layer, not original feature X
+        self.inputs = placeholders['AXfeatures']  # A*X for the bottom layer, not original feature X
         self.input_dim = input_dim
         # self.input_dim = self.inputs.get_shape().as_list()[1]  # To be supported in future Tensorflow versions
         self.output_dim = placeholders['labels'].get_shape().as_list()[1]
@@ -249,7 +245,6 @@ class GCN_APPRO_Mix(Model): #mixture of dense and gcn
 
         # Cross entropy error
         self.loss += softmax_cross_entropy(self.outputs, self.placeholders['labels'])
-
 
     def _accuracy(self):
         self.accuracy = accuracy(self.outputs, self.placeholders['labels'])
@@ -273,7 +268,6 @@ class GCN_APPRO_Mix(Model): #mixture of dense and gcn
 
     def predict(self):
         return tf.nn.softmax(self.outputs)
-
 
 
 class GCN_APPRO_Onelayer(Model):
